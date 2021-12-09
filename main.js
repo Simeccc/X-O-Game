@@ -69,7 +69,7 @@ function startGame() {
         else {
             alert("Please fill all fields!");
         }
-    })
+    });
 }
 
 // GAME 
@@ -80,10 +80,11 @@ let playerTwoScore = document.querySelector('.player-two-score');
 let gameContainer = document.querySelector('.game-container')
 
 // CREATED VARIABLES 
-let symbol = "X";
-let roundCounter = 1;
+let boxes;
+let symbol = "O";
 let scoreX = 0;
 let scoreO = 0;
+let clicks = -1;
 //GAME CALL FUNCTIONS
 
 // GAME FUNCTIONS 
@@ -94,11 +95,9 @@ function createTable() {
     playerTwoScore.innerHTML = `${playerTwoName} : 0`;
 
     let text = "";
-
+    
     for (let i = 0; i < 9; i++) {
-        text += `
-        <div class="box"></div>
-        `;
+        text += "<div class='box'></div>";
     }
 
     gameContainer.innerHTML = text;
@@ -120,7 +119,28 @@ function addSymbols() {
     this.innerHTML = symbol;
     this.removeEventListener('click', addSymbols);
 
-    checkLines();
+    checkNoWinner();
+}
+
+function checkNoWinner() {
+    clicks++;
+    if(clicks === boxes.length -1 && boxes[clicks] !== "") {
+        setTimeout(restartGame(), 3000);
+        
+        gameDesign.style.display = "none";
+        displayWinnerDesign.style.display = "block";
+
+        winnerStatus.innerHTML = `&#11088; RESULT &#11088;`;
+        winner.innerHTML = `NO WINNER`;
+    }
+    // else {
+    //     if(totalRoundsNum > 0) {
+    //         checkLines();
+    //     }
+    //     else {
+    //         restartGame();
+    //     }
+    // }
 }
 
 function checkLines() {
@@ -149,10 +169,10 @@ function checkLines() {
                 box1.style.background = "#64b4eb";
                 box2.style.background = "#64b4eb";
                 box3.style.background = "#64b4eb";
-            }, 1000);
+            }, 1000);   
             nextRounds(box1, box2, box3);
-        }
-    })
+        } 
+    });
 }
 
 function nextRounds(box1, box2, box3) {
@@ -164,7 +184,7 @@ function nextRounds(box1, box2, box3) {
         createTable();
         updatePlayerScore();
         updateRounds();
-    },3000)
+    },3000);
 }
 
 function updatePlayerScore() {
@@ -179,10 +199,10 @@ function updatePlayerScore() {
 }
 
 function updateRounds(){
-    roundCounter++;
+    totalRoundsNum--;
     totalRoundsGame.innerHTML = `Total rounds : ${totalRoundsNum}`;
     
-    if(roundCounter > totalRoundsNum) {
+    if(totalRoundsNum < 1) {
         displayWinner();
     }
 }
@@ -217,7 +237,6 @@ function displayWinner() {
 }
 
 //RESTART GAME - NEW GAME
-
 function restartGame() {
     playAgain.addEventListener('click', function() {
         newGame();
