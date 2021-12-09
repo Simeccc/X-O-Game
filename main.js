@@ -146,9 +146,9 @@ function checkLines() {
             box1.innerHTML === box3.innerHTML &&
             box1.innerHTML != "") {
             setTimeout(function() {
-                box1.style.background = "lime";
-                box2.style.background = "lime";
-                box3.style.background = "lime";
+                box1.style.background = "#64b4eb";
+                box2.style.background = "#64b4eb";
+                box3.style.background = "#64b4eb";
             }, 1000);
             nextRounds(box1, box2, box3);
         }
