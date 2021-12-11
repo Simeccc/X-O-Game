@@ -155,7 +155,7 @@ function checkWinner() {
 
     clicks++;
     if(clicks === boxes.length -1 && boxes[clicks] !== "") {
-        nextRounds();
+        restartGame();
 
         gameDesign.style.display = "none";
         displayWinnerDesign.style.display = "block";
