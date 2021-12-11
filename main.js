@@ -37,7 +37,7 @@ function enterTotalRounds(){
 function enterPlayersNames() {
     enterFirstName.addEventListener('click', function() {
         enterFirstName.innerHTML = prompt("Enter Player One name");
-        if(enterFirstName != "Player 1 Name"){
+        if(enterFirstName !== "Player 1 Name"){
             firstNameStatus = true;
         }
         else {
@@ -48,7 +48,7 @@ function enterPlayersNames() {
     });
     enterSecondName.addEventListener('click', function() {
         enterSecondName.innerHTML = prompt("Enter Player Two name");
-        if(enterSecondName != "Player 1 Name"){
+        if(enterSecondName !== "Player 1 Name"){
             secondNameStatus = true;
         }
         else {
@@ -119,31 +119,10 @@ function addSymbols() {
     this.innerHTML = symbol;
     this.removeEventListener('click', addSymbols);
 
-    checkNoWinner();
+    checkWinner();
 }
 
-function checkNoWinner() {
-    clicks++;
-    if(clicks === boxes.length -1 && boxes[clicks] !== "") {
-        setTimeout(restartGame(), 3000);
-        
-        gameDesign.style.display = "none";
-        displayWinnerDesign.style.display = "block";
-
-        winnerStatus.innerHTML = `&#11088; RESULT &#11088;`;
-        winner.innerHTML = `NO WINNER`;
-    }
-    // else {
-    //     if(totalRoundsNum > 0) {
-    //         checkLines();
-    //     }
-    //     else {
-    //         restartGame();
-    //     }
-    // }
-}
-
-function checkLines() {
+function checkWinner() {
     let lines = [
         [0,1,2],
         [3,4,5],
@@ -164,7 +143,7 @@ function checkLines() {
 
         if(box1.innerHTML === box2.innerHTML &&
             box1.innerHTML === box3.innerHTML &&
-            box1.innerHTML != "") {
+            box1.innerHTML !== "") {
             setTimeout(function() {
                 box1.style.background = "#64b4eb";
                 box2.style.background = "#64b4eb";
@@ -173,6 +152,17 @@ function checkLines() {
             nextRounds(box1, box2, box3);
         } 
     });
+
+    clicks++;
+    if(clicks === boxes.length -1 && boxes[clicks] !== "") {
+        nextRounds();
+
+        gameDesign.style.display = "none";
+        displayWinnerDesign.style.display = "block";
+
+        winnerStatus.innerHTML = `&#11088; RESULT &#11088;`;
+        winner.innerHTML = `NO WINNER`;
+    }
 }
 
 function nextRounds(box1, box2, box3) {
@@ -180,7 +170,7 @@ function nextRounds(box1, box2, box3) {
         box1.style.background = "transparent"
         box2.style.background = "transparent"
         box3.style.background = "transparent"
-        
+            
         createTable();
         updatePlayerScore();
         updateRounds();
